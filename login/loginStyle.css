@@ -7,6 +7,8 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+
+
 body{
     background-color: #012328;
     display: flex;
@@ -15,6 +17,24 @@ body{
     flex-direction: column;
     height: 100vh;
 }
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 120px;
+    z-index: 3;
+    
+  }
+
+.logo img {
+    width: 180%;
+    height: auto;
+    object-fit: contain;
+    
+  }
+  
+
 
 .container{
     background: linear-gradient(90deg, #c10b0b, #44423e);
