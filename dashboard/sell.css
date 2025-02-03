@@ -75,10 +75,9 @@ header {
   }
   
   .nav-links {
-    list-style: outside;
+    list-style: none; /* Removes bullet points */
     display: flex;
     gap: 3.5em;
-  
   }
   
   .nav-links li {
@@ -92,22 +91,28 @@ header {
     transition: color 0.3s;
   }
   
-  .nav-links a:active {
+  .nav-links a:hover, 
+  .nav-links a.active { /* Ensures active link stays highlighted */
     color: #ff6347;
+  }
+  
+  /* Corrected Active Indicator */
+  .nav-links a.active {
+    position: relative; /* Ensures `::after` is positioned relative to the link */
   }
   
   .nav-links a.active::after {
     content: '';
-    position: relative;
-    bottom: -15px;
+    position: absolute; /* Ensures correct placement */
+    bottom: -8px; /* Adjust as needed */
     left: 50%;
     transform: translateX(-50%);
     width: 6px;
     height: 6px;
     background-color: #ff6347;
     border-radius: 50%;
-  }  
-
+  }
+  
   .property-details {
     background: linear-gradient(90deg, #8b0000, #330000);
     padding: 2rem;

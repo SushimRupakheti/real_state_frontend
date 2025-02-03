@@ -13,40 +13,44 @@ body {
   overflow-x: auto;
 }
 
-/* Buttons */
+
+/* Common button styles */
 .houseButton, .ApartmentButton, .LandButton {
   background: linear-gradient(90deg, #c43434, #605c55);
   color: #ffffff;
   border: none;
-  padding: 10px 10px;
+  padding: 10px;
   font-size: 13px;
   border-radius: 20px;
   cursor: pointer;
   width: 80px;
   height: 70px;
   text-align: center;
+  transition: all 0.3s ease; /* Moved transition here for all buttons */
 }
 
+
+/* Common spacing for house & apartment buttons */
 .houseButton, .ApartmentButton {
   margin-top: 30px;
   margin-left: 10px;
 }
 
-.ApartmentButton {
-  margin-left: 10px;
-}
-
+/* Adjustments for specific buttons */
 .LandButton {
-  margin-left: 55px;
-  margin-top: 10px;
+  margin: 10px 0 0 55px; /* Combined margin properties */
 }
 
-.houseButton:hover, .ApartmentButton:hover, .LandButton:hover {
+/* Hover effect */
+.houseButton:hover, 
+.ApartmentButton:hover, 
+.LandButton:hover {
   color: black;
   background: white;
   transform: scale(1.05);
-  transition: all 0.3s ease;
 }
+
+
 
 /* Header */
 header {
@@ -100,14 +104,13 @@ header nav a {
 }
 
 .vertical-line1 {
-  position: fixed;
-  left: 200px;
-  height: 100%;
-  top: 115px;
-  border-right: 1px solid white;
-  
+  position: absolute;
+  left: 200px; /* Adjust as needed */
+  top: 112px; /* Starting position */
+  width: 1px; /* Line thickness */
+  background-color: white; /* Line color */
+  height: 100%; /* Extends as content grows */
 }
-
 
 
 /* Hero Section */
@@ -165,10 +168,9 @@ header nav a {
 }
 
 .nav-links {
-  list-style: outside;
+  list-style: none; /* Removes bullet points */
   display: flex;
   gap: 3.5em;
-
 }
 
 .nav-links li {
@@ -182,14 +184,20 @@ header nav a {
   transition: color 0.3s;
 }
 
-.nav-links a:hover, .nav-links a:active {
+.nav-links a:hover, 
+.nav-links a.active { /* Ensures active link stays highlighted */
   color: #ff6347;
+}
+
+/* Corrected Active Indicator */
+.nav-links a.active {
+  position: relative; /* Ensures `::after` is positioned relative to the link */
 }
 
 .nav-links a.active::after {
   content: '';
-  position: relative;
-  bottom: -15px;
+  position: absolute; /* Ensures correct placement */
+  bottom: -8px; /* Adjust as needed */
   left: 50%;
   transform: translateX(-50%);
   width: 6px;
@@ -197,6 +205,9 @@ header nav a {
   background-color: #ff6347;
   border-radius: 50%;
 }
+
+
+
 .search{
 position:relative;
 right:60px;

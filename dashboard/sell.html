@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Property</title>
+    <link rel="stylesheet" href="sell.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">ORIGIN HOMES</div>  </header>
+        <nav class="navbar">
+          <ul class="nav-links">
+            <li><a href="buy.html" class="nav-link">Buy</a></li>
+            <li><a href="sell.html" class="nav-link active">Sell</a></li>
+            <li><a href="rent.html" class="nav-link">Rent</a></li>
+            <li><a href="rentOut.html" class="nav-link">Rent Out</a></li>
+          </ul>
+        </nav>
+     
+      <hr class="header-line">
+      <div class="logo1">
+        <img src="/images/logo.png" alt="Origin Homes Logo">
+      </div>
+
+      <h1 class="h1">Property Details</h1> 
+
+    <div class="property-details">
+  <form>
+    <div class="form-group">
+      <input type="text" placeholder="Owner's Name" />
+      <select>
+        <option value="" disabled selected>Property Location</option>
+        <option value="Kathmandu">Kathmandu</option>
+        <option value="Pokhara">Pokhara</option>
+        <option value="Chitwan">Chitwan</option>
+        <option value="Dharan">Dharan</option>
+        <option value="Others">Others</option></select>
+      </select>
+      <input type="text" placeholder="Property Title" />
+      <input type="text" placeholder="Phone no" />
+      <input type="text" placeholder="Price($)" />
+      <select>
+        <option value="" disabled selected>Property Type</option>
+        <option>House</option>
+        <option>Land</option>
+        <option>Apartment</option>
+      </select>
+    </div>
+    
+
+   
+    <div class="form-group">
+        <h6>Property Desription:</h6>
+      <textarea placeholder="Describe your property, Here..........."></textarea>
+
+      <h6>Property Photo:</h6>
+      <div class="photo-upload">
+        <label for="property-photo">+</label>
+        <input type="file" id="property-photo" />
+      </div>
+    </div>
+
+    <div class="form-group" id="Highlights">
+      <input type="text" placeholder="Highlight The major components" />
+    </div>
+
+    <button type="submit">Post The Property</button>
+  </form>
+</div>
+
+
+</body>
+</html>
