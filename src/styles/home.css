@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    color: #ffffff;
+    background-color: #012328;
+    position: static;
+    overflow-x:auto; 
+  }
+  
+  /* Header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    position: relative;
+    z-index: 1; /* Ensure the header stays below the logo if overlapped */
+  }
+  
+  header .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    left: 20px;
+    top: 20px;
+  }
+  
+  header nav a {
+    font-family: Poppins, sans-serif;
+    font-size: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 400;
+  }
+  header nav {
+    position: relative;
+    top: 30px; /* Moves nav downward */
+  }
+  /* Logo (overlapping both nav and hero) */
+  .logo1 {
+    position: absolute; /* Allows precise placement anywhere on the screen */
+    top: 40px; /* Adjust the vertical position */
+    left: 30px; /* Adjust the horizontal position */
+    width: 120px; /* Set the size of the logo container */
+    z-index: 3; /* Ensure the logo appears above both header and hero */
+  }
+  
+  .logo1 img {
+    width: 50%;
+    height: auto;
+    object-fit: contain; /* Prevent cropping */
+  }
+  
+  /* Hero Section */
+  .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 50px 20px;
+    position: relative;
+    height: 90vh;
+    overflow: hidden;
+  
+  }
+  
+  .hero .content {
+    z-index: 2;
+    color: #ffffff; /* Ensure text remains visible against the background */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Optional: Add a shadow to improve readability */
+  }
+  
+  .hero h1 {
+    font-family: "Poppins", sans-serif;
+    font-size: 40px; 
+    font-weight: 600px; 
+    max-width: 600px; 
+    margin-left: -520px; 
+    margin-top: 70px; 
+    text-align: left;
+  }
+  
+  .hero p {
+    font-family: "poppins", sans-serif;
+    font-size: 15px;
+    /* margin-bottom: 30px; */
+    max-width: 600px;
+    font-weight: 200;
+    margin-left: -520px;
+    margin-top: 30px;
+    text-align: left;
+  
+  }
+  
+  .hero button {
+    background: linear-gradient(90deg, #df1616, #605c55);
+    color: #ffffff;
+    border: none;
+    padding: 12px 70px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 2;
+    position: relative;
+    margin-left: -830px;
+    margin-top :60px;  ;
+  }
+  
+  .hero button:hover {
+    background: linear-gradient(90deg, #605c55, #df1616);
+  }
+  
