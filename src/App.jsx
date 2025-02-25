@@ -12,12 +12,15 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/auth" element={<Auth />} /> 
         </Routes>
       </Router>
     </>
   )
 }
 
+
+
 export default App
+
+

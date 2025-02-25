@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../../styles/auth.css';
 import { useNavigate } from "react-router"
+import Logo from '../logo';
 
 const Auth = () => {
 
+  const SERVER_ROOT = import.meta.env.VITE_SERVER_ROOT;
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false)
   const [registerErrors, setRegisterErrors] = useState({});
   const [loginErrors, setLoginErrors] = useState({})
+  const [message, setMessage] = useState("")
 
   const [registerUser, setRegisterUser] = useState({
     name: '',
@@ -24,6 +28,14 @@ const Auth = () => {
     email: '',
     password: ''
   })
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (user) {
+      navigate('/dashboard')
+    }
+  }, [navigate])
+
 
   const verifyRegisterForm = () => {
     const errors = {};
@@ -89,7 +101,7 @@ const Auth = () => {
     setIsSignUp(!isSignUp);
   };
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setLoginErrors({})
 
@@ -101,11 +113,43 @@ const Auth = () => {
       return;
     }
 
-    console.log("Form is valid:", loginUser);
-    navigate('/dashboard')
+    try {
+      setIsLoading(true);
+
+      const response = await fetch(`${SERVER_ROOT}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginUser)
+      })
+
+      const data = await response.json();
+
+      if (!data.success) {
+        setLoginErrors(prev => ({
+          ...prev,
+          serverError: data.error || data.message
+        }));
+        return
+      }
+
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/dashboard')
+    }
+    catch (error) {
+      console.error(error);
+      setLoginErrors(prev => ({
+        ...prev,
+        serverError: 'Failed to sign in. Please try again'
+      }))
+    }
+    finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     setRegisterErrors({})
 
@@ -117,13 +161,56 @@ const Auth = () => {
       return;
     }
 
-    console.log('Form is valid:', registerUser);
-    navigate('/dashboard')
+    try {
+      setIsLoading(true);
+      console.log('Registering user:', registerUser);
+
+      const response = await fetch(`${SERVER_ROOT}/api/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(registerUser)
+      })
+
+      const data = await response.json();
+
+      if (!data.success) {
+        setRegisterErrors(prev => ({
+          ...prev,
+          serverError: data.error || data.message
+        }));
+        return
+      }
+
+      setTimeout(() => {
+        setIsSignUp(false)
+      }, 2000);
+
+      setRegisterUser({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phone: ''
+      })
+      setMessage("Account created successfully. Please sign in to continue")
+    }
+    catch (error) {
+      console.error(error);
+      setRegisterErrors(prev => ({
+        ...prev,
+        serverError: 'Failed to sign up. Please try again'
+      }))
+    }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className='auth-component'>
-
+      <Logo styles={{ position: 'absolute', top: 0, left: 0 }} />
       <div className={`container-auth ${isSignUp ? 'active' : ''}`}>
 
         {/* Sign up */}
@@ -139,11 +226,7 @@ const Auth = () => {
             }}
             onSubmit={handleSignUp}
           >
-            <h1
-              style={{
-                marginTop: Object.keys(registerErrors).length > 0 ? '250px' : "0",
-              }}
-              className='sign-up-title'>Create Account</h1>
+            <h1 className='sign-up-title'>Create Account</h1>
 
             <div className="form-field">
               <input
@@ -219,11 +302,24 @@ const Auth = () => {
               {registerErrors.phone && <p className="error-message">{registerErrors.phone}</p>}
             </div>
 
+            {registerErrors.serverError &&
+              <p className="error-message">
+                {registerErrors.serverError}
+              </p>
+            }
+
+            {message &&
+              <p className="success-message">
+                {message}
+              </p>
+            }
+
             <button
-              style={{
-                marginBottom: Object.keys(registerErrors).length > 0 ? '40px' : '0'
-              }}
-              type="submit">Sign Up</button>
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing up..." : "Sign Up"}
+            </button>
           </form>
         </div>
 
@@ -270,7 +366,17 @@ const Auth = () => {
               {loginErrors.password && <p className="error-message">{loginErrors.password}</p>}
             </div>
             <a href="#">Forgot Your Password?</a>
-            <button type="submit">Sign In</button>
+            {loginErrors.serverError &&
+              <p className="error-message">
+                {loginErrors.serverError}
+              </p>
+            }
+            <button
+              disabled={isLoading}
+              type="submit"
+            >
+              {isLoading ? "Signing in..." : "Sign in"}
+            </button>
           </form>
         </div>
 
@@ -284,7 +390,11 @@ const Auth = () => {
                   maxWidth: '300px'
                 }}
               >Enter your personal details to use all of site features</p>
-              <button className="hidden" onClick={toggleForm}>
+              <button
+                disabled={isLoading}
+                className="hidden"
+                onClick={toggleForm}
+              >
                 Sign In
               </button>
             </div>
@@ -296,7 +406,11 @@ const Auth = () => {
                   maxWidth: '300px'
                 }}
               >Register with your personal details to use all of site features</p>
-              <button className="hidden" onClick={toggleForm}>
+              <button
+                disabled={isLoading}
+                className="hidden"
+                onClick={toggleForm}
+              >
                 Sign Up
               </button>
             </div>

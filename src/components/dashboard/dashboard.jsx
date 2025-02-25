@@ -1,23 +1,66 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import '../../styles/dashboard.css';
 import { FaHome } from "react-icons/fa";
+import { PiBuildingApartment } from "react-icons/pi";
+import { LuLandPlot } from "react-icons/lu";
 import Buy from './buy';
 import Sell from './sell';
-import { useState } from 'react';
+import Logo from '../logo';
 
 const Dashboard = () => {
+
+  const navigate = useNavigate()
+
   const [tab, setTab] = useState("Buy");
+
+  const [filters, setFilters] = useState({
+    propertyType: "",
+    location: "",
+    priceRange: ""
+  });
+
+  const handlePropertyTypeFilter = (type) => {
+    setFilters(prev => ({
+      ...prev,
+      propertyType: prev.propertyType === type ? "" : type
+    }));
+  };
+
+  const handleLocationFilter = (location) => {
+    setFilters(prev => ({
+      ...prev,
+      location
+    }));
+  };
+
+  const handlePriceFilter = (price) => {
+    setFilters(prev => ({
+      ...prev,
+      priceRange: price
+    }));
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      propertyType: "",
+      location: "",
+      priceRange: ""
+    });
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (!user) {
+      navigate('/auth')
+    }
+  }, [navigate])
 
   return (
     <div>
       <nav className="navbar">
-        <div className="logo">
-          <img
-            src="/images/logo.png" alt="Logo"
-            className='logo-img'
-          />
-          <p className='logo-text'>ORIGIN HOMES</p>
-        </div>
-
+        <Logo />
+        
         <div className="tabs">
           <ul className='tabs-list'>
             <li
@@ -56,25 +99,54 @@ const Dashboard = () => {
 
       <div className="container-dash">
         {
-          tab === "Buy" &&
+          (tab === "Buy" || tab === "Rent") &&
           <div className="filters">
             <h3>Filters</h3>
-            <p>Property Type: </p>
+            <button
+              className='clear-filters'
+              onClick={clearFilters}
+            >
+              Clear Filters
+            </button>
+            <p className='property-type-filter'>Property Type: </p>
             <div className='filter-options'>
-              <div className='filter-option'>
+              <div
+                onClick={() => handlePropertyTypeFilter('house')}
+                className='filter-option'
+                style={{
+                  background: filters.propertyType === 'house' ? 'linear-gradient(to right, #FF5959, #737373)' : ''
+                }}
+              >
                 <FaHome className='filter-icon' />
               </div>
-              <div className='filter-option'>
-                <FaHome className='filter-icon' />
+              <div
+                onClick={() => handlePropertyTypeFilter('apartment')}
+                className='filter-option'
+                style={{
+                  background: filters.propertyType === 'apartment' ? 'linear-gradient(to right, #FF5959, #737373)' : ''
+                }}
+              >
+                <PiBuildingApartment className='filter-icon' />
               </div>
-              <div className='filter-option'>
-                <FaHome className='filter-icon' />
+              <div
+                onClick={() => handlePropertyTypeFilter('land')}
+                className='filter-option'
+                style={{
+                  background: filters.propertyType === 'land' ? 'linear-gradient(to right, #FF5959, #737373)' : ''
+                }}
+              >
+                <LuLandPlot className='filter-icon' />
               </div>
             </div>
 
             <div className='location-filter'>
               <p>Location: </p>
-              <select className='location-select'>
+              <select
+                className='location-select'
+                value={filters.location}
+                onChange={(e) => handleLocationFilter(e.target.value)}
+              >
+                <option value="" disabled>Location</option>
                 <option value="pokhara">Pokhara</option>
                 <option value="kathmandu">Kathmandu</option>
                 <option value="location3">Location3</option>
@@ -84,11 +156,16 @@ const Dashboard = () => {
 
             <div className='price-filter'>
               <p>Price Range: </p>
-              <select className='price-select'>
-                <option value="1">1 crore</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+              <select
+                 className='price-select'
+                 value={filters.priceRange}
+                 onChange={(e) => handlePriceFilter(e.target.value)}
+              >
+                <option value="" disabled>Price Range</option>
+                <option value="100000">Upto 1 Lakh</option>
+                <option value="10000000">Upto 1 Crore</option>
+                <option value="100000000">Upto 10 Crore</option>
+                <option value="100000001">Above 10 Crore</option>
               </select>
             </div>
           </div>
@@ -96,8 +173,10 @@ const Dashboard = () => {
 
 
         <main className="main-content">
-          {tab === "Buy" && <Buy />}
-          {tab === "Sell" && <Sell />}
+          {tab === "Buy" && <Buy filters={filters} isBuyComponent={true} />}
+          {tab === "Sell" && <Sell isSellComponent={true} />}
+          {tab === "Rent" && <Buy filters={filters} isBuyComponent={false} />}
+          {tab === "Rent Out" && <Sell isSellComponent={false} />}
         </main>
       </div>
     </div>
