@@ -43,6 +43,38 @@ body {
   top: 30px;
 }
 
+.nav-item {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.info-box {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color: black;
+  padding: 12px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  white-space: normal;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  width: 220px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.nav-item:hover .info-box {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
 .home-logo1 {
   position: absolute;
   top: 40px;
