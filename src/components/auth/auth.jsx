@@ -18,7 +18,7 @@ const Auth = () => {
 
   const [registerUser, setRegisterUser] = useState({
     name: '',
-    email: '',
+    email: '', 
     password: '',
     confirmPassword: '',
     phone: ''
