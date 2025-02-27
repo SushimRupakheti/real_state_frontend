@@ -92,9 +92,7 @@ const Dashboard = () => {
             <input className='searchBar' type="text" placeholder="Search..." />
           </div>
         </div>
-        <div className='heart'>
-          <img className='heart-img' src="/images/heart.png" alt="" />
-        </div>
+
       </nav>
 
       <div className="container-dash">
@@ -149,8 +147,12 @@ const Dashboard = () => {
                 <option value="" disabled>Location</option>
                 <option value="pokhara">Pokhara</option>
                 <option value="kathmandu">Kathmandu</option>
-                <option value="location3">Location3</option>
-                <option value="location4">Location4</option>
+                <option value="location3">Chitwan</option>
+                <option value="location4">Palpa</option>
+                <option value="location4">Hetauda</option>
+                <option value="location4">Bandipur</option>
+                <option value="location4">Ghandruk</option>
+                <option value="location4">Dharan</option>
               </select>
             </div>
 

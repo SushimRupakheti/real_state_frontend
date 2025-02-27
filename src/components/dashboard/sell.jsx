@@ -178,11 +178,15 @@ const Sell = ({ isSellComponent = true }) => {
                                         value={propertyDetails.propertyLocation}
                                         onChange={handleChange}
                                     >
-                                        <option value="">Property Location</option>
-                                        <option value="Kathmandu">Kathmandu</option>
-                                        <option value="Pokhara">Pokhara</option>
-                                        <option value="Palpa">Palpa</option>
-                                        <option value="Chitwan">Chitwan</option>
+                                        <option value="" disabled>Property Location</option>
+                                        <option value="pokhara">Pokhara</option>
+                                        <option value="kathmandu">Kathmandu</option>
+                                        <option value="location3">Chitwan</option>
+                                        <option value="location4">Palpa</option>
+                                        <option value="location4">Hetauda</option>
+                                        <option value="location4">Bandipur</option>
+                                        <option value="location4">Ghandruk</option>
+                                        <option value="location4">Dharan</option>
                                     </select>
                                     {errors.propertyLocation &&
                                         <p className="sell-error-message">{errors.propertyLocation}</p>
